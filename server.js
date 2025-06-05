@@ -51,6 +51,10 @@ app.use((err, req, res, next) => {
 // Ambil nomor port dari environment variable
 // Jika tidak ada, gunakan port 8080
 const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`Server berjalan di port ${PORT}`);
+});
+
 
 // Jalankan server terlebih dahulu
 // '0.0.0.0' artinya server bisa diakses dari IP manapun

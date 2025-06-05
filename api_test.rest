@@ -1,0 +1,150 @@
+### Variables
+@baseUrl = http://localhost:8080
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ0ZXMyQHNhaHVyLmNvbSIsInJvbGUiOmZhbHNlLCJpYXQiOjE3NDkxNTQ5NzEsImV4cCI6MTc0OTI0MTM3MX0.VDyyjgRQrdkPbn2GfQ72-58FbHcPUOPLuW-65fq7lHw
+
+### AUTH ENDPOINTS ###
+
+### Register new user
+POST {{baseUrl}}/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "admin",
+    "email": "admin@admin.com",
+    "password": "admin123",
+    "passwordConfirmation": "admin123"
+}
+
+### Login user
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "tes2@sahur.com",
+    "password": "password123"
+}
+
+### Login user
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "admin@admin.com",
+    "password": "admin123"
+}
+
+### Get user profile
+GET {{baseUrl}}/api/auth/profile
+Authorization: Bearer {{authToken}}
+
+### Update user profile
+PUT {{baseUrl}}/api/auth/profile
+Authorization: Bearer {{authToken}}
+Content-Type: multipart/form-data; boundary=----WebKitFormBoundary
+
+------WebKitFormBoundary
+Content-Disposition: form-data; name="username"
+
+newUsername
+------WebKitFormBoundary
+Content-Disposition: form-data; name="email"
+
+newemail@example.com
+------WebKitFormBoundary
+Content-Disposition: form-data; name="currentPassword"
+
+password123
+------WebKitFormBoundary
+Content-Disposition: form-data; name="newPassword"
+
+newpassword123
+------WebKitFormBoundary
+Content-Disposition: form-data; name="profilePicture"; filename="profile.jpg"
+Content-Type: image/jpeg
+
+< ./coba.jpg
+------WebKitFormBoundary--
+
+### Delete user account
+DELETE {{baseUrl}}/api/auth/profile
+Authorization: Bearer {{authToken}}
+
+### PRODUK ENDPOINTS ###
+
+### Get all produk
+GET {{baseUrl}}/api/produk
+Authorization: Bearer {{authToken}}
+
+### Get produk by ID
+GET {{baseUrl}}/api/produk/1
+Authorization: Bearer {{authToken}}
+
+### Create new produk (Admin only)
+POST {{baseUrl}}/api/produk
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "description": "Produk masuk untuk pengunjung Anak Anak",
+    "price": 5000,
+    "category": "bunga segar",
+    "nama": "Bunga mawar"
+}
+
+### Update produk (Admin only)
+PUT {{baseUrl}}/api/produk/5
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "description": "Updated produk description",
+    "price": 75000,
+    "category": "boneka",
+    "nama": "Boneka Beruang"
+}
+
+### Delete produk (Admin only)
+DELETE {{baseUrl}}/api/produk/4
+Authorization: Bearer {{authToken}}
+
+### TRANSACTION ENDPOINTS ###
+
+### Get ALL transactions (Admin only)
+GET {{baseUrl}}/api/transactions/admin/all
+Authorization: Bearer {{authToken}}
+
+### Create new transaction
+POST {{baseUrl}}/api/transactions
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "produkID": 1,
+    "produkQuantity": 3
+}
+
+### OWNED PRODUK ENDPOINTS ###
+### Note: Owned produk are automatically created when a transaction is made
+### Direct creation is for admin/special purposes only
+
+### Get all owned produk
+GET {{baseUrl}}/api/owned-produk
+Authorization: Bearer {{authToken}}
+
+### Get owned produk by ID
+GET {{baseUrl}}/api/owned-produk/2
+Authorization: Bearer {{authToken}}
+
+### Create owned produk directly (requires transactionID)
+POST {{baseUrl}}/api/owned-produk
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+    "produkID": 8,
+    "transactionID": 1
+}
+
+### Update owned produk usage status (mark as used)
+PUT {{baseUrl}}/api/owned-produk/51/use
+Authorization: Bearer {{authToken}}
